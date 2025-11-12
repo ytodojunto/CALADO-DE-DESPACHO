@@ -98,41 +98,39 @@
     </div>
 
     <script>
-        function calcularCaladoDespacho() {
-            const peInput = document.getElementById('peInput'); 
-            const pe = parseFloat(peInput.value); 
-            
-            if (isNaN(pe) || pe <= 0) {
-                document.getElementById('resultadoCD').textContent = "Ingrese una PE válida.";
-                return;
-            }
+       function calcularCaladoDespacho() {
+    const peInput = document.getElementById('peInput'); 
+    const pe = parseFloat(peInput.value); 
+    
+    if (isNaN(pe) || pe <= 0) {
+        document.getElementById('resultadoCD').textContent = "Ingrese una PE válida.";
+        return;
+    }
 
-            let caladoDespacho;
+    let caladoDespacho;
 
-            // --- LÓGICA DE CÁLCULO (CD a partir de PE) ---
-            
-            // Rango 1: PE <= 10.96 (MSBQ 0.60)
-            if (pe <= 10.96) {
-                caladoDespacho = pe - 0.60;
-            } 
-            // Rango 3: PE > 11.0939 (MSBQ 10% de CD)
-            else if (pe > 11.0939) { 
-                caladoDespacho = pe / 1.10;
-            } 
-            // Rango 2: Intermedio (10.96 < PE <= 11.0939) - MSBQ Incremental (3 cm/cm)
-            else {
-                // CD = (PE - 0.2892) / 1.03
-                caladoDespacho = (pe - 0.2892) / 1.03;
-            }
+    // --- LÓGICA DE CÁLCULO FINAL Y CORREGIDA ---
 
-            // Asegurar que no sea negativo
-            if (caladoDespacho < 0) {
-                caladoDespacho = 0;
-            }
+    // Rango 1: PE <= 10.96 (MSBQ 0.60)
+    if (pe <= 10.96) {
+        caladoDespacho = pe - 0.60;
+    } 
+    // Rango 3: PE >= 11.55 (MSBQ 10% de CD)
+    else if (pe >= 11.55) { 
+        caladoDespacho = pe / 1.10;
+    } 
+    // Rango 2: Intermedio (10.96 < PE < 11.55) - USANDO FÓRMULA PRÁCTICA SIMPLE
+    else {
+        // Fórmula de despeje empírica para el rango incremental (CD = (PE + 30.48) / 4)
+        caladoDespacho = (pe + 30.48) / 4;
+    }
 
-            document.getElementById('resultadoCD').textContent = caladoDespacho.toFixed(3);
-        }
-    </script>
+    if (caladoDespacho < 0) {
+        caladoDespacho = 0;
+    }
+
+    document.getElementById('resultadoCD').textContent = caladoDespacho.toFixed(3);
+} 
 
 </body>
 </html>
