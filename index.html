@@ -9,8 +9,8 @@
         body { 
             font-family: Arial, sans-serif; 
             padding: 20px; 
-            background-color: #333333; /* Fondo principal gris oscuro */
-            color: #ffffff; /* Letras blancas */
+            background-color: #333333; 
+            color: #ffffff; 
         }
         .container { 
             max-width: 450px; 
@@ -18,7 +18,14 @@
             padding: 25px; 
             border: 1px solid #555; 
             border-radius: 8px;
-            background-color: #444444; /* Fondo del contenedor */
+            background-color: #444444; 
+        }
+        /* Estilos para el Logo */
+        #appLogo {
+            display: block; 
+            max-width: 100px; 
+            height: auto;
+            margin: 0 auto 15px auto; /* Centra el logo y añade margen */
         }
         .tramo-info {
             background-color: #555555;
@@ -43,7 +50,7 @@
             padding: 10px; 
             margin-bottom: 10px; 
             box-sizing: border-box;
-            background-color: #666666; /* Campos de entrada grises */
+            background-color: #666666;
             color: #ffffff;
             border: 1px solid #777;
         }
@@ -63,13 +70,14 @@
             margin-top: 20px; 
             border-top: 2px solid #777; 
             padding-top: 10px; 
-            color: #4CAF50; /* Color del resultado (Verde) */
+            color: #4CAF50;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
+        <img src="logo (2).png" alt="Logo de la Asociación" id="appLogo">
         <h2>⚓ Cálculo de Calado de Despacho (CD)</h2>
         
         <div class="tramo-info">
@@ -101,10 +109,8 @@
 
             let caladoDespacho;
 
-            // LÓGICA DE CÁLCULO (PE a CD)
-            // -----------------------------
-            // Puntos de inflexión: 10.96m (R1/R2) y 11.0939m (R2/R3)
-
+            // --- LÓGICA DE CÁLCULO (CD a partir de PE) ---
+            
             // Rango 1: PE <= 10.96 (MSBQ 0.60)
             if (pe <= 10.96) {
                 caladoDespacho = pe - 0.60;
@@ -115,10 +121,11 @@
             } 
             // Rango 2: Intermedio (10.96 < PE <= 11.0939) - MSBQ Incremental (3 cm/cm)
             else {
-                // Fórmula de despeje: CD = (PE - 0.2892) / 1.03
+                // CD = (PE - 0.2892) / 1.03
                 caladoDespacho = (pe - 0.2892) / 1.03;
             }
 
+            // Asegurar que no sea negativo
             if (caladoDespacho < 0) {
                 caladoDespacho = 0;
             }
