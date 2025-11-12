@@ -9,8 +9,8 @@
         body { 
             font-family: Arial, sans-serif; 
             padding: 20px; 
-            background-color: #333333; 
-            color: #ffffff;
+            background-color: #333333; /* Fondo principal gris oscuro */
+            color: #ffffff; /* Letras blancas */
         }
         .container { 
             max-width: 450px; 
@@ -18,7 +18,7 @@
             padding: 25px; 
             border: 1px solid #555; 
             border-radius: 8px;
-            background-color: #444444; 
+            background-color: #444444; /* Fondo del contenedor */
         }
         .tramo-info {
             background-color: #555555;
@@ -43,7 +43,7 @@
             padding: 10px; 
             margin-bottom: 10px; 
             box-sizing: border-box;
-            background-color: #666666;
+            background-color: #666666; /* Campos de entrada grises */
             color: #ffffff;
             border: 1px solid #777;
         }
@@ -63,7 +63,7 @@
             margin-top: 20px; 
             border-top: 2px solid #777; 
             padding-top: 10px; 
-            color: #4CAF50;
+            color: #4CAF50; /* Color del resultado (Verde) */
         }
     </style>
 </head>
@@ -90,7 +90,6 @@
     </div>
 
     <script>
-        // TU FUNCIÓN DE CÁLCULO ESTÁ AQUÍ
         function calcularCaladoDespacho() {
             const peInput = document.getElementById('peInput'); 
             const pe = parseFloat(peInput.value); 
@@ -101,6 +100,10 @@
             }
 
             let caladoDespacho;
+
+            // LÓGICA DE CÁLCULO (PE a CD)
+            // -----------------------------
+            // Puntos de inflexión: 10.96m (R1/R2) y 11.0939m (R2/R3)
 
             // Rango 1: PE <= 10.96 (MSBQ 0.60)
             if (pe <= 10.96) {
