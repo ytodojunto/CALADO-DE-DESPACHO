@@ -1,0 +1,39 @@
+function calcularCaladoDespacho() {
+    // 1. Obtener el valor del campo de entrada
+    // Asegúrate que el ID del input sea 'peInput'
+    const peInput = document.getElementById('peInput');
+    const pe = parseFloat(peInput.value); 
+    
+    if (isNaN(pe) || pe <= 0) {
+        document.getElementById('resultadoCD').textContent = "Ingrese una PE válida.";
+        return;
+    }
+
+    let caladoDespacho;
+
+    // --- Puntos de Inflexión de PE (Profundidad Efectiva) ---
+    // Limite R1/R2: 10.36 + 0.60 = 10.96
+    // Limite R2/R3: CD 10.49m -> PE 11.0939m. Usaremos este valor.
+
+    // Rango 1: PE <= 10.96 (MSBQ 0.60)
+    if (pe <= 10.96) {
+        caladoDespacho = pe - 0.60;
+    } 
+    // Rango 3: PE > 11.0939 (MSBQ 10% de CD)
+    else if (pe > 11.0939) { 
+        caladoDespacho = pe / 1.10;
+    } 
+    // Rango 2: Intermedio (10.96 < PE <= 11.0939) - MSBQ Incremental (3 cm/cm)
+    else {
+        // Fórmula de despeje: CD = (PE - 0.2892) / 1.03
+        caladoDespacho = (pe - 0.2892) / 1.03;
+    }
+
+    // Asegura que el resultado sea numérico y no dé resultados ilógicos (como negativos)
+    if (caladoDespacho < 0) {
+        caladoDespacho = 0;
+    }
+
+    // Muestra el resultado redondeado a 3 decimales
+    document.getElementById('resultadoCD').textContent = caladoDespacho.toFixed(3);
+}
